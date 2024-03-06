@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Album</title>
+    <!-- Utiliza las referencias de Bootstrap sin integridades hash específicas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Superhero Album</h1>
+
+    <h2>Heroes</h2>
+    <div class="row" id="heroes-list"></div>
+
+    <h2 class="mt-4">Threats</h2>
+    <div class="row" id="threats-list"></div>
+</div>
+
+<!-- Utiliza las referencias de Bootstrap sin integridades hash específicas -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    async function fetchData(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    }
+
+    async function renderHeroes() {
+        const heroesData = await fetchData('http://localhost:8081/heroes');
+        const heroesList = document.getElementById('heroes-list');
+
+        heroesData.forEach(hero => {
+            const heroCol = document.createElement('div');
+            heroCol.classList.add('col-md-3', 'mb-4');
+            heroCol.innerHTML = `
+                <div class="card">
+                    <img src="http://localhost:8081/img/${hero.img}" class="card-img-top" alt="${hero.displayName}">
+                    <div class="card-body">
+                        <h5 class="card-title">${hero.displayName}</h5>
+                        <p class="card-text">${hero.type} - Powers: ${hero.powers.join(', ')}</p>
+                    </div>
+                </div>
+            `;
+            heroesList.appendChild(heroCol);
+        });
+    }
+
+    async function renderThreats() {
+        const threatsData = await fetchData('http://localhost:8082/threats');
+        const threatsList = document.getElementById('threats-list');
+
+        threatsData.forEach(threat => {
+            const threatCol = document.createElement('div');
+            threatCol.classList.add('col-md-3', 'mb-4');
+            threatCol.innerHTML = `
+                <div class="card">
+                    <img src="http://localhost:8082/img/${threat.img}" class="card-img-top" alt="${threat.displayName}">
+                    <div class="card-body">
+                        <h5 class="card-title">${threat.displayName}</h5>
+                        <p class="card-text">Necessary Powers: ${threat.necessaryPowers.join(', ')}</p>
+                    </div>
+                </div>
+            `;
+            threatsList.appendChild(threatCol);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderHeroes();
+        renderThreats();
+    });
+</script>
+
+</body>
+</html>
