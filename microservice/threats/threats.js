@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
 const cors = require('cors');
-const port = process.argv.slice(2)[0];
+const port = 8082;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());

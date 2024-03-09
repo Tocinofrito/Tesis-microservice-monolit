@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  heroes:
+    build:
+      context: ./heroes
+    container_name: heroes
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./heroes:/usr/src/heroes
+
+  threats:
+    build:
+      context: ./threats
+    container_name: threats
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./threats:/usr/src/threats

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  monolith:
+    build:
+      context: .
+    container_name: monolith
+    ports:
+      - "8084:3000"
+    environment:
+      - PORT=3000
+    volumes:
+      - ./img:/usr/src/app/img
+      - .:/usr/src/app
