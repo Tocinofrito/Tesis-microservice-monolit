@@ -7,7 +7,9 @@ const port = 3000;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8084'
+}));
 app.use('/img', express.static(path.join(__dirname, 'img')));
 const powers = [
   { id: 1, name: 'flying' },
