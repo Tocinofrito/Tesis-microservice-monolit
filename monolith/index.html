@@ -26,8 +26,8 @@
         const fetchData = async () => {
             try {
                 const [heroesResponse, threatsResponse] = await Promise.all([
-                    fetch('http://localhost:8084/heroes'),
-                    fetch('http://localhost:8084/threats')
+                    fetch("http://localhost:8084/heroes"),
+                    fetch("http://localhost:8084/threats")
                 ]);
 
                 const heroes = await heroesResponse.json();
