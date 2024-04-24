@@ -5,13 +5,15 @@ FROM node:20.12.2-bookworm
 WORKDIR /usr/src/app
 
 # Copia los archivos del proyecto al contenedor
-COPY package*.json ./
+COPY package* ./
+
+# Copia el resto de los archivos al contenedor
+COPY . .
 
 # Instala las dependencias
 RUN npm install
 
-# Copia el resto de los archivos al contenedor
-COPY . .
+
 
 # Instala nodemon globalmente
 RUN npm install -g nodemon
