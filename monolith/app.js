@@ -8,7 +8,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: '*'
+  origin: '192.168.0.18:8084',
+  optionsSuccessStatus:200
 }));
 app.use('/img', express.static(path.join(__dirname, 'img')));
 const powers = [
