@@ -1,14 +1,19 @@
 version: '3'
 
 services:
-  monolith:
+  combined:
     build:
       context: .
-    container_name: monolith
+    container_name: combined
     ports:
       - "8084:3000"
+      - "53:53/tcp"
+      - "53:53/udp"
     environment:
       - PORT=3000
+      - ROOT_PASSWORD=your-root-password
     volumes:
       - ./img:/usr/src/app/img
+      - ./data/bind:/data
       - .:/usr/src/app
+    #command: ["bash", "-c", "/usr/src/app/start.sh"]  # Ejecuta un script al iniciar el contenedor
