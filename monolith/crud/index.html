@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD</title>
+  <style>
+    .data-container {
+      margin-bottom: 20px;
+    }
+    .data-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
+  <script>
+    async function fetchData(endpoint) {
+      const response = await fetch(`http://localhost:3000/${endpoint}`);
+      const data = await response.json();
+      displayData(endpoint, data);
+    }
+
+    async function addData(endpoint, data) {
+      const response = await fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      console.log(result);
+      fetchData(endpoint);  // Refresh the displayed data
+    }
+
+    async function updateData(endpoint, id, data) {
+      const response = await fetch(`http://localhost:3000/${endpoint}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      console.log(result);
+      fetchData(endpoint);  // Refresh the displayed data
+    }
+
+    async function deleteData(endpoint, id) {
+      const response = await fetch(`http://localhost:3000/${endpoint}/${id}`, {
+        method: 'DELETE'
+      });
+      const result = await response.json();
+      console.log(result);
+      fetchData(endpoint);  // Refresh the displayed data
+    }
+
+    function displayData(endpoint, data) {
+      const container = document.getElementById(`${endpoint}-container`);
+      container.innerHTML = ''; // Clear previous data
+      data.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'data-item';
+        itemElement.textContent = JSON.stringify(item, null, 2);
+        container.appendChild(itemElement);
+      });
+    }
+
+    function getInputData(formId) {
+      const form = document.getElementById(formId);
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (key === 'powers' || key === 'necessaryPowers') {
+          data[key] = value.split(',').map(item => item.trim());
+        } else if (key === 'busy') {
+          data[key] = form[key].checked;
+        } else {
+          data[key] = value;
+        }
+      });
+      return data;
+    }
+  </script>
+</head>
+<body>
+  <h1>CRUD</h1>
+
+  <h2>Poderes</h2>
+  <button onclick="fetchData('powers')">Get Powers</button>
+  <div id="powers-container" class="data-container"></div>
+  <form id="powers-form">
+    <input type="text" name="name" placeholder="Power Name" required>
+    <button type="button" onclick="addData('powers', getInputData('powers-form'))">Add Power</button>
+  </form>
+
+  <h2>Heroes</h2>
+  <button onclick="fetchData('heroes')">Get Heroes</button>
+  <div id="heroes-container" class="data-container"></div>
+  <form id="heroes-form">
+    <input type="text" name="type" placeholder="Hero Type" required>
+    <input type="text" name="displayName" placeholder="Display Name" required>
+    <input type="number" name="powers" placeholder="Powers (comma separated)" required>
+    <input type="text" name="img" placeholder="Image" required>
+    <label>
+      <input type="checkbox" name="busy"> Busy
+    </label>
+    <button type="button" onclick="addData('heroes', getInputData('heroes-form'))">Add Hero</button>
+  </form>
+
+  <h2>Debilidades</h2>
+  <button onclick="fetchData('threats')">Get Threats</button>
+  <div id="threats-container" class="data-container"></div>
+  <form id="threats-form">
+    <input type="text" name="displayName" placeholder="Threat Name" required>
+    <input type="text" name="necessaryPowers" placeholder="Necessary Powers (comma separated)" required>
+    <input type="text" name="img" placeholder="Image" required>
+    <button type="button" onclick="addData('threats', getInputData('threats-form'))">Add Threat</button>
+  </form>
+
+  <h2>Update Poder</h2>
+  <form id="update-power-form">
+    <input type="number" name="id" placeholder="Power ID" required>
+    <input type="text" name="name" placeholder="New Power Name" required>
+    <button type="button" onclick="updateData('powers', document.getElementById('update-power-form').id.value, getInputData('update-power-form'))">Update Power</button>
+  </form>
+
+  <h2>Update Heroe</h2>
+  <form id="update-hero-form">
+    <input type="number" name="id" placeholder="Hero ID" required>
+    <input type="text" name="type" placeholder="New Hero Type">
+    <input type="text" name="displayName" placeholder="New Display Name">
+    <input type="text" name="powers" placeholder="New Powers (comma separated)">
+    <input type="text" name="img" placeholder="New Image">
+    <label>
+      <input type="checkbox" name="busy"> Busy
+    </label>
+    <button type="button" onclick="updateData('heroes', document.getElementById('update-hero-form').id.value, getInputData('update-hero-form'))">Update Hero</button>
+  </form>
+
+  <h2>Update Debilidadt</h2>
+  <form id="update-threat-form">
+    <input type="number" name="id" placeholder="Threat ID" required>
+    <input type="text" name="displayName" placeholder="New Threat Name">
+    <input type="text" name="necessaryPowers" placeholder="New Necessary Powers (comma separated)">
+    <input type="text" name="img" placeholder="New Image">
+    <button type="button" onclick="updateData('threats', document.getElementById('update-threat-form').id.value, getInputData('update-threat-form'))">Update Threat</button>
+  </form>
+
+  <h2>Delete Poder</h2>
+  <form id="delete-power-form">
+    <input type="number" name="id" placeholder="Power ID" required>
+    <button type="button" onclick="deleteData('powers', document.getElementById('delete-power-form').id.value)">Delete Power</button>
+  </form>
+
+  <h2>Delete Heroe</h2>
+  <form id="delete-hero-form">
+    <input type="number" name="id" placeholder="Hero ID" required>
+    <button type="button" onclick="deleteData('heroes', document.getElementById('delete-hero-form').id.value)">Delete Hero</button>
+  </form>
+
+  <h2>Delete Debilidad</h2>
+  <form id="delete-threat-form">
+    <input type="number" name="id" placeholder="Threat ID" required>
+    <button type="button" onclick="deleteData('threats', document.getElementById('delete-threat-form').id.value)">Delete Threat</button>
+  </form>
+</body>
+</html>

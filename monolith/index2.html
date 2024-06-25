@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1 class="text-center mt-4 mb-4">Superhero App Docker</h1>
+    <h1 class="text-center mt-4 mb-4">Superhero App VM</h1>
 
     <h2 class="text-center">Héroes</h2>
     <div class="container">
@@ -26,8 +26,8 @@
         const fetchData = async () => {
             try {
                 const [heroesResponse, threatsResponse] = await Promise.all([
-                    fetch("http://127.0.0.1:3000/heroes"),
-                    fetch("http://127.0.0.1:3000/threats")
+                    fetch("http://192.168.111.129:3000/heroes"),
+                    fetch("http://192.168.111.129:3000/threats")
                 ]);
 
                 const heroes = await heroesResponse.json();
@@ -39,7 +39,7 @@
                     col.classList.add('col-md-3', 'mb-4');
                     col.innerHTML = `
                         <div class="card">
-                            <img src="http://127.0.0.1:3000/img/${hero.img}" class="card-img-top" alt="${hero.displayName}">
+                            <img src="http://192.168.111.129:3000/img/${hero.img}" class="card-img-top" alt="${hero.displayName}">
                             <div class="card-body">
                                 <h5 class="card-title">${hero.displayName}</h5>
                                 <p class="card-text">${hero.type} - Powers: ${hero.powers.join(', ')}</p>
@@ -55,7 +55,7 @@
                     col.classList.add('col-md-3', 'mb-4');
                     col.innerHTML = `
                         <div class="card">
-                            <img src="http://127.0.0.1:3000/img/${threat.img}" class="card-img-top" alt="${threat.displayName}">
+                            <img src="http://192.168.111.129:3000/img/${threat.img}" class="card-img-top" alt="${threat.displayName}">
                             <div class="card-body">
                                 <h5 class="card-title">${threat.displayName}</h5>
                                 <p class="card-text">Necessary Powers: ${threat.necessaryPowers.join(', ')}</p>

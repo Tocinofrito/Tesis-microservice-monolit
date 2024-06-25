@@ -1,0 +1,103 @@
+{
+  "powers": [
+    {
+      "id": "1",
+      "name": "Volar"
+    },
+    {
+      "id": 2,
+      "name": "teleporting"
+    },
+    {
+      "id": 3,
+      "name": "super strength"
+    },
+    {
+      "id": 4,
+      "name": "clairvoyance"
+    },
+    {
+      "id": 5,
+      "name": "mind reading"
+    },
+    {
+      "name": "correr",
+      "id": "6"
+    }
+  ],
+  "heroes": [
+    {
+      "id": 1,
+      "type": "spider-dog",
+      "displayName": "Cooper",
+      "powers": [
+        1,
+        4
+      ],
+      "img": "cooper.jpg",
+      "busy": false
+    },
+    {
+      "id": 2,
+      "type": "flying-dogs",
+      "displayName": "Jack & Buddy",
+      "powers": [
+        2,
+        5
+      ],
+      "img": "jack_buddy.jpg",
+      "busy": false
+    },
+    {
+      "id": 3,
+      "type": "dark-light-side",
+      "displayName": "Max & Charlie",
+      "powers": [
+        3,
+        2
+      ],
+      "img": "max_charlie.jpg",
+      "busy": false
+    },
+    {
+      "id": 4,
+      "type": "captain-dog",
+      "displayName": "Rocky",
+      "powers": [
+        1,
+        5
+      ],
+      "img": "rocky.jpg",
+      "busy": false
+    }
+  ],
+  "threats": [
+    {
+      "id": 1,
+      "displayName": "Pisa tower is about to collapse.",
+      "necessaryPowers": [
+        "flying"
+      ],
+      "img": "tower.jpg",
+      "assignedHero": 0
+    },
+    {
+      "id": 2,
+      "displayName": "Engineer is going to clean up server-room.",
+      "necessaryPowers": [
+        "teleporting"
+      ],
+      "img": "mess.jpg",
+      "assignedHero": 0
+    },
+    {
+      "id": 3,
+      "displayName": "John will not understand the joke",
+      "necessaryPowers": [
+        "clairvoyance"
+      ],
+      "img": "joke.png",
+      "assignedHero": 0
+    }
+  ]
+}
